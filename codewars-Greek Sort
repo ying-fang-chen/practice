@@ -1,0 +1,19 @@
+#sample test
+#test.expect(greek_comparator('alpha', 'beta') < 0, "result should be negative")
+#test.assert_equals(greek_comparator('psi', 'psi'), 0)
+#test.expect(greek_comparator('upsilon', 'rho'), "result should be positive")
+
+
+greek_alphabet = ['alpha', 'beta', 'gamma', 'delta', 'epsilon', 
+    'zeta', 'eta', 'theta', 'iota', 'kappa', 'lambda', 'mu', 
+    'nu', 'xi', 'omicron', 'pi', 'rho', 'sigma',
+    'tau', 'upsilon', 'phi', 'chi', 'psi', 'omega']
+new_dict={}   
+for i in range(len(greek_alphabet)):
+    new_dict[greek_alphabet[i]]=i
+def greek_comparator(lhs, rhs):
+    # the tuple greek_alphabet is defined in the global namespace
+    a=new_dict.get(lhs)
+    b=new_dict.get(rhs)
+    c=int(a)-int(b)
+    return c
