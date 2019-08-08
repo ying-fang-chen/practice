@@ -3,7 +3,7 @@
 #test.assert_equals(greek_comparator('psi', 'psi'), 0)
 #test.expect(greek_comparator('upsilon', 'rho'), "result should be positive")
 
-
+#my solution
 greek_alphabet = ['alpha', 'beta', 'gamma', 'delta', 'epsilon', 
     'zeta', 'eta', 'theta', 'iota', 'kappa', 'lambda', 'mu', 
     'nu', 'xi', 'omicron', 'pi', 'rho', 'sigma',
@@ -12,8 +12,17 @@ new_dict={}
 for i in range(len(greek_alphabet)):
     new_dict[greek_alphabet[i]]=i
 def greek_comparator(lhs, rhs):
-    # the tuple greek_alphabet is defined in the global namespace
-    a=new_dict.get(lhs)
-    b=new_dict.get(rhs)
-    c=int(a)-int(b)
+    c=int(new_dict.get(lhs))-int(new_dict.get(rhs))
     return c
+    
+    
+#better solution using tuple given greek_alphabet
+greek_alphabet = (
+    'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta', 
+    'eta', 'theta', 'iota', 'kappa', 'lambda', 'mu', 
+    'nu', 'xi', 'omicron', 'pi', 'rho', 'sigma',
+    'tau', 'upsilon', 'phi', 'chi', 'psi', 'omega')
+def greek_comparator(lhs, rhs):
+    return greek_alphabet.index(lhs) - greek_alphabet.index(rhs)
+    
+#Comment: I learn tuple's index() method 
