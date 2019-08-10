@@ -1,0 +1,21 @@
+'''
+Given a string S that only contains "I" (increase) or "D" (decrease), let N = S.length.
+Return any permutation A of [0, 1, ..., N] such that for all i = 0, ..., N-1:
+If S[i] == "I", then A[i] < A[i+1]
+If S[i] == "D", then A[i] > A[i+1]
+1 <= S.length <= 10000
+'''
+class Solution(object):
+    def diStringMatch(self, S):
+        """
+        :type S: str
+        :rtype: List[int]
+        """
+
+
+S=str(input())
+N=len(S)
+
+#for a list say [0,1,2,3]. first "I" should be 0, second "I" is 1, first "D" should be 3, second "D" is 2 and so on
+
+#unfinished
