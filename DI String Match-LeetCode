@@ -7,15 +7,44 @@ If S[i] == "D", then A[i] > A[i+1]
 '''
 class Solution(object):
     def diStringMatch(self, S):
-        """
-        :type S: str
-        :rtype: List[int]
-        """
-
-
-S=str(input())
-N=len(S)
+        N=len(S)
+        totalI=0
+        totalD=N
+        A=[]
+        for i in range(N):
+            if S[i]=="I":
+                A.append(totalI)
+                totalI+=1
+            if S[i]=="D":
+                A.append(totalD)
+                totalD-=1
+        if S[(N-1)]=="I":
+            a=int(totalI)
+            A.append(a)
+        if S[(N-1)]=="D":
+            b=int(totalD)
+            A.append(b)
+        return A
 
 #for a list say [0,1,2,3]. first "I" should be 0, second "I" is 1, first "D" should be 3, second "D" is 2 and so on
+#passed and details: 
+#Runtime: 60 ms, faster than 41.36% of Python online submissions for DI String Match.
+#Memory Usage: 13.3 MB, less than 9.52% of Python online submissions for DI String Match.
 
-#unfinished
+#adjust
+class Solution(object):
+    def diStringMatch(self, S):
+        N=len(S)
+        totalI=0
+        totalD=N
+        A=[]
+        for x in S:
+            if x =="I":
+                A.append(totalI)
+                totalI+=1
+            if x =="D":
+                A.append(totalD)
+                totalD-=1
+        A.append(totalI)
+        return A
+#same Runtime, but "Memory Usage: 12.8 MB, less than 71.43% of Python online submissions for DI String Match."
