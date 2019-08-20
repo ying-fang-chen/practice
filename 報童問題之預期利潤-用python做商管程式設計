@@ -1,0 +1,34 @@
+'''
+N+5列，每一列都有一個數字。第一列的整數是單位進貨成本c、
+第二列的整數是單位零售價格r、第三列的整數是需求的可能個數N、
+第四列是訂貨量q、第五列開始的小數則依序是賣出零份、
+一份直到N份報紙的機率（也就是說對於i=4,5, ..., N+4，
+第i列記錄的是賣出i-4份報紙的機率）。
+已知c會落在1到100之間（包含 1 跟 100）、r會落在 1 到 100 之間（包含 1 跟 100）
+、r不會比c小、N一定會是 8。此外，對於i=0,1, ..., N，pi會介於 0 到 1 之間（包含 0 跟 1）
+、最多只有兩位小數，並且滿足 \sum_{i = 0}^N pi = 1∑ 
+'''
+import math
+c=float(input("進貨成本"))
+r=float(input("零售價格"))
+N=8
+q=float(input("訂貨量"))
+prob=[]
+sum_p=0
+for i in range(N+1):
+    if i<q:
+        prob.append(input())
+        #print(prob)
+    else:
+        takein=float(input())
+        sum_p=sum_p+takein
+        #print(sum_p)
+prob.append(sum_p)
+sum_all=0
+for i in range(len(prob)):
+    eac=float(r*i-c*q)
+    spe=float(prob[i])
+    then=eac*spe
+    sum_all=sum_all+then
+    print(sum_all)
+print(math.floor(sum_all))
