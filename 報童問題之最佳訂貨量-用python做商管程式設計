@@ -1,0 +1,42 @@
+'''
+在每筆測試資料中，會有N + 4列，每一列都有一個數字。
+第一列的整數是單位進貨成本c、第二列的整數是單位零售價格r、第三列的整數是需求的可能個數N、
+第四列開始的小數則依序是賣出零份、一份直到 NN 份報紙的機率。
+已知c會落在 1 到 100 之間（包含 1 跟 100）、r會落在 1 到 100 之間（包含 1 跟 100）、r不會比c小、N一定會是 8。
+此外，對於 i = 0, 1, ..., N，pi會介於 0 到 1 之間（包含 0 跟 1）、最多只有兩位小數。
+讀入這些資料之後，你會計算最佳訂購量 q*，以及在此訂購量下的預期利潤無條件捨去到整數，並且在兩者中間用一個空格隔開。
+'''
+
+
+import math
+cost=float(input("進貨成本"))
+retail=float(input("零售價格"))
+N=8
+#q=float(input("訂貨量"))
+prob=[]
+for i in range(N+1):
+    p=float(input())
+    prob.append(p)
+q=0
+profit=0
+profit_list=[]
+while q<9:
+    earn=0
+    for e in range(0, q):
+        earn=earn+e*float(prob[e])
+    sum_p=0
+    for k in range(q,(N+1)):
+        sum_p=sum_p+prob[k]
+    earn=earn+float(sum_p)*q
+    profit=earn*retail-cost*q
+    profit_list.append(profit)
+    q=q+1
+max_profit=0
+best_q=0    
+for i in range(len(profit_list)):
+    if profit_list[i]>max_profit:
+        max_profit=profit_list[i]
+        best_q=i
+    if profit_list[i]==max_profit:
+        pass
+print(str(best_q)+" "+str(math.floor(max_profit)))
