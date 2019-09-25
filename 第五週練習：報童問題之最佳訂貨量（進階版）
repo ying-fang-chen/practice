@@ -1,0 +1,51 @@
+'''
+在每筆測試資料中，會有N+5列，每一列都有一個數字。
+第一列的整數是單位進貨成本c、第二列的整數是單位零售價格r、
+第三列的整數是需求的可能個數N、第四列是殘值s、第五列開始的小數則依序是賣出零份、一份直到N份報紙的機率。
+讀入這些資料之後，你會計算並輸出在給定訂購量下的預期利潤無條件捨去到整數。
+'''
+import math
+c=int(input("c:"))
+r=int(input("r:"))
+N=int(input("N:"))
+s=int(input("s:"))
+prob=[]
+for i in range(N+1):
+    p=float(input("p:"))
+    prob.append(p)
+print(prob)
+q=0
+best_q=0
+expected_profit=0
+while q<N:
+    benefit=0
+    tp=[]
+    sump=0
+    for k in range(q):
+        temp=prob[k]
+        tp.append(temp)
+        sump=sump+tp[k]
+        #print("sump")
+        #print(sump)
+    tp.append(1-sump)
+    #print(tp[-1])
+    sum_earn=0
+    salvage=0 
+    for i in range(q+1):
+        sum_earn=sum_earn+float(r)*float(i)*float(tp[i])
+        #print("sum_earn")
+        #print(sum_earn)
+        salvage=salvage+float(s)*(float(q)-float(i))*tp[i]
+        #print("salvage")
+        #print(salvage)
+    benefit=sum_earn-float(c)*float(q)+salvage
+    #print("benefit")
+    #print(benefit)
+    if benefit>expected_profit:
+        expected_profit=benefit
+        best_q=q
+    if benefit==expected_profit:
+        if q>best_q:
+            pass
+    q=q+1
+print(str(best_q)+" "+str(math.floor(expected_profit)))
