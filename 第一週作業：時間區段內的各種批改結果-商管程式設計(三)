@@ -1,0 +1,94 @@
+題目敘述：
+當我們在臺大開設「商管程式設計」的實體課程時，我們使用一個自動批改系統，學生們在寫作業或考試的時候，是去系統上傳自己的程式碼，
+然後系統會直譯並且執行此程式碼，並且輸入若干筆測試資料，讓程式計算並輸出結果，再跟正確答案比對。在一次上傳後，會有至少以下五種批改結果：
+
+Accepted：在全部的測試資料都得到了正確答案。
+Compile Error：程式中有 syntax error。
+Runtime Error：程式在某幾筆測試資料發生了 run-time error。
+Wrong Answer：程式在某幾筆測試資料輸出了錯誤的答案（亦即發生了 logic error）。
+Time Limit Exceed：程式在某幾筆測試資料執行過久，在時限前沒有輸出答案。
+在「Resource」裡面的「資料檔」區，大家可以看到「midterm2.csv」這個檔案。
+在這個檔案中，我們記錄了本門課在臺大的實體課某學期第二次期中考（共有四題）的所有繳交記錄。
+檔案共有七個欄位，「SubmissionID」是每次提交程式碼時系統給定的唯一編號、
+「StudentID」是那次提交程式碼的學生編號（一個學號對應到一個學生編號，但我們已經處理過編號了，因此你從學生編號看不出學號）、
+「Problem」是提交的題號（1 到 4 的整數）、
+「Status」是提交後的狀態（Accepted、Compile Error、Runtime Error、Time Limit Exceed、Wrong Answer 五種）、
+「Score」是該題的得分（第一題到第四題的滿分各是 30、40、30、30，考試總分 130 分）、
+「CodeLength」是該次提交的程式碼的長度、「SubmissionTime」是提交的時間。
+請注意這個檔案中的資料列是依提交時間由晚到早排序的。
+
+解題code：
+import csv
+class Time(): #formatted like 10:20:00
+    def __init__(self, timeText):
+        self.hour, self.minute, self.second=timeText.split(":")
+        self.time=str(self.hour)+str(self.minute)+str(self.second)
+    def __str__(self):
+        return self.time
+    def isBetweenLimit(self, startTime, endTime):#endTime must be a Time object
+        if int(startTime.time)<=int(self.time)<=int(endTime.time): 
+            return True
+        else: 
+            return False
+
+class submission():
+    def __init__(self, SubmissionID, StudentID, Problem, Status, Score, CodeLength, SubmissionTime):
+        self.SubmissionID=SubmissionID
+        self.StudentID=StudentID
+        self.Problem=Problem
+        self.Status=Status
+        self.Score=Score
+        self.CodeLength=CodeLength
+        self.SubmissionTime=Time(SubmissionTime) #time object
+    def __str__(self):
+        return self.SubmissionID+" "+self.StudentID+" "+self.Problem
+
+objectList=list()
+with open('C:/Users/evachen/Downloads/midterm2.csv', newline='') as csvfile:
+    rows = csv.reader(csvfile)
+    headers = next(rows)
+    for row in rows:
+        row[0]=submission(row[0],row[1],row[2],row[3],row[4],row[5],row[6])
+        objectList.append(row[0])
+
+
+time=input("Time limit:")
+startTimeText, endTimeText=time.split(" ")
+startTime=Time(startTimeText)
+endTime=Time(endTimeText)
+
+answerList=[[0 for i in range(5)] for j in range(4)]
+for i in range(len(objectList)):
+    if (objectList[i].SubmissionTime.isBetweenLimit(startTime, endTime)):
+        if objectList[i].Status=="Accepted":
+            n=int(objectList[i].Problem)-1
+            answerList[n][0]+=1
+        elif objectList[i].Status=="Compile Error":
+            n=int(objectList[i].Problem)-1
+            answerList[n][1]+=1
+        elif objectList[i].Status=="Runtime Error":
+            n=int(objectList[i].Problem)-1
+            answerList[n][2]+=1
+        elif objectList[i].Status=="Time Limit Exceed":
+            n=int(objectList[i].Problem)-1
+            answerList[n][3]+=1
+        elif objectList[i].Status=="Wrong Answer":
+            n=int(objectList[i].Problem)-1
+            answerList[n][4]+=1
+    #else:
+        #print("obmitted time", objectList[i].SubmissionTime)    
+
+answer=""
+for i in range(4):
+    for k in range(5):
+        if k==4:
+            answer+=str(answerList[i][k])+";"
+        else:
+            answer+=str(answerList[i][k])+" "
+
+print(answer)
+
+
+
+
+
